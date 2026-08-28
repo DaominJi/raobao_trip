@@ -136,6 +136,7 @@ button{font:inherit;cursor:pointer}
 .opt{display:grid;grid-template-columns:1fr auto;gap:6px 10px;padding:7px 8px;border-radius:8px;cursor:pointer;border-left:3px solid transparent}
 .opt:hover{background:var(--sand)}
 .opt.primary{border-left-color:var(--gold);background:#fbf8f0}
+.opt.live{border-left-color:#3a7bd5;background:#f7fafd}
 .opt .n{font-family:var(--serif);font-weight:600;font-size:14px}
 .opt .n small{font-weight:400;color:var(--ink-2);margin-left:6px;font-size:11px}
 .opt .p{font-family:var(--serif);color:var(--brick);white-space:nowrap;text-align:right;font-size:13px}
@@ -143,6 +144,7 @@ button{font:inherit;cursor:pointer}
 .opt .g{font-size:11px;color:#fff;background:#3a7bd5;border-radius:4px;padding:0 6px;margin-right:6px;text-decoration:none}
 .opt .g:hover{background:#2c5fa8}
 .opt .g.poi{background:#e6eef1;color:var(--sea);font-weight:500}
+.opt .g.ctrip{background:#2b6cd4}
 .poi-slot .tier{opacity:.7}
 .amaplink{display:inline-block;margin-top:4px;font-size:12px;color:#3a7bd5;text-decoration:none}
 .opt .tier{font-size:11px;color:var(--ink-2);background:#eee9dc;border-radius:4px;padding:0 5px;margin-right:6px}
@@ -265,6 +267,7 @@ button{font:inherit;cursor:pointer}
 <section class="notes">
   <div class="note warn"><h4>天气与台风</h4><p>9月初福建 30–35°C、湿度大，室外安排在上午10点前和下午4点后。出发前一周查台风路径：平潭轮渡、鼓浪屿船票都可能停航，这是方案C存在的理由。</p></div>
   <div class="note gold"><h4>必须提前订</h4><p>鼓浪屿船票（"厦门轮渡"公众号，提前1–3天）；平潭→泉州动车（班次少）；蟳埔簪花拍照（预约）。其余可到场随机应变。</p></div>
+  <div class="note warn"><h4>9/5 演唱会之夜</h4><p>海峡奥体中心 19:13 开演：落地后直奔奥体旁酒店放行李，17:00 前在爱琴海吃完晚饭，18:00 安检入场。散场几万人同时打车基本打不到——福州住宿的第一原则是住在步行距离内。</p></div>
   <div class="note"><h4>返程机场</h4><p>方案默认从厦门高崎机场返程，漳州到高崎约1小时。若9/11航班在中午前，9/10晚务必住回厦门岛内。若中转恰好经厦门，可倒着走（厦门进福州出）。</p></div>
 </section>
 
@@ -275,7 +278,6 @@ const P = {
   // 福州
   fz_apt:{n:"福州长乐机场",k:"transit",c:[25.935,119.663],d:"下午/傍晚抵达，机场快线或地铁 F1 线约1小时进城"},
   fz_sfqx:{n:"三坊七巷",k:"sight",c:[26.084,119.295],d:"南后街天黑亮灯后最好看，重点看塔巷、衣锦坊、林觉民故居"},
-  fz_stay:{n:"福州万达希尔顿 / 三坊七巷老宅民宿",k:"stay",c:[26.080,119.292],d:"东街口一带，步行到三坊七巷、地铁1号线直达火车站"},
   fz_jcy:{n:"聚春园（佛跳墙）",k:"food",c:[26.086,119.300],d:"佛跳墙发源地，点小盅佛跳墙 + 荔枝肉 + 芋泥"},
   fz_tl:{n:"同利肉燕 / 永和鱼丸",k:"food",c:[26.084,119.298],d:"南后街上的老字号，一碗肉燕一碗鱼丸就是福州早餐"},
   fz_xh:{n:"西湖公园",k:"sight",c:[26.093,119.291],d:"清晨最舒服，环湖半小时"},
@@ -283,6 +285,10 @@ const P = {
   fz_gbh:{n:"锅边糊早餐（老福州）",k:"food",c:[26.088,119.296],d:"锅边糊 + 虾酥/海蛎饼，地道福州早晨"},
   fz_sxh:{n:"上下杭",k:"sight",c:[26.060,119.301],d:"老商埠改造街区，晚上比三坊七巷更松弛"},
   fz_yts:{n:"烟台山",k:"sight",c:[26.050,119.312],d:"洋楼、咖啡馆、仓山老街，适合下午慢走"},
+  fz_aoti:{n:"福州海峡奥体中心体育场",k:"sight",c:[26.028,119.262],d:"演唱会 19:13 开场，18:00 前安检入场更从容；散场后打车极难，回酒店最好步行"},
+  fz_aoti_stay:{n:"奥体周边酒店（见下方住宿可选）",k:"stay",c:[26.033,119.268],d:"先到酒店放行李再去吃饭；演唱会当晚周边酒店会涨价，务必尽早预订"},
+  fz_aigo:{n:"爱琴海购物公园（奥体对面）",k:"food",c:[26.040,119.276],d:"商场餐饮，17:00 前吃完晚饭再入场；海底捞、闽菜、快餐都有"},
+  fz_stay2:{n:"三坊七巷一带酒店（方案C第二晚）",k:"stay",c:[26.082,119.294],d:"9/6 从奥体搬到市中心，逛街吃饭都方便"},
   fz_sta:{n:"福州站",k:"transit",c:[26.115,119.310],d:"福平铁路始发，到平潭约40分钟"},
   // 平潭
   pt_sta:{n:"平潭站",k:"transit",c:[25.520,119.720],d:"出站打车到坛南湾约20分钟"},
@@ -329,31 +335,34 @@ const P = {
    评分不在页面内列出，由"高德查评分/价格"链接跳转高德地图实时查看 */
 const STAY = {
  福州:[
-  {n:"福州万达希尔顿",tier:"高端",price:"¥650–900/晚",c:[26.080,119.292],r:"距三坊七巷步行8分钟，行政楼层看闽江；商务感重，但设施最稳。"},
-  {n:"聚春园大酒店",tier:"老字号",price:"¥350–500/晚",c:[26.0866,119.2996],r:"就在东街口，楼下是佛跳墙发源地餐厅，房间偏旧但地段无敌。"},
-  {n:"三坊七巷·书香文儒精品酒店",tier:"古宅精品",price:"¥800–1200/晚",c:[26.0814,119.2942],r:"坊巷里的清代大宅，入住奉茶、太平燕迎客；隔音一般，押金较高。"},
-  {n:"东百兰斯酒店",tier:"性价比",price:"¥300–450/晚",c:[26.0851,119.2989],r:"东百大厦高层，南向房正对三坊七巷和乌山，早餐丰富，评价出奇地好。"},
-  {n:"锦江都城·三坊七巷店",tier:"连锁",price:"¥280–380/晚",c:[26.0872,119.2985],r:"房间大、安静，标准连锁品质，适合只想睡个好觉。"}],
+  {n:"汉庭酒店（福州奥体中心店）",tier:"¥200–300",price:"¥200–300/晚",c:[26.0355,119.2695],r:"步行到奥体，散场走回去不用抢车；演唱会当晚可能涨到¥350+，越早订越好。"},
+  {n:"如家酒店（福州浦上大道店）",tier:"¥200–300",price:"¥200–300/晚",c:[26.0380,119.2725],r:"和汉庭同档，哪家有房订哪家；订前看最近三个月评价。"},
+  {n:"全季酒店（福州奥体中心店）",tier:"¥300–400",price:"¥300–400/晚",c:[26.0410,119.2750],r:"比经济连锁大一档的房间和隔音，演唱会之夜值这个差价。"},
+  {n:"维也纳酒店（福州金山爱琴海店）",tier:"¥300–400",price:"¥300–400/晚",c:[26.0428,119.2775],r:"挨着爱琴海购物公园，晚饭和散场夜宵都在楼下解决。"},
+  {n:"福州世纪金源大饭店",tier:"¥400–500",price:"¥400–500/晚",c:[26.0460,119.2840],r:"金山老牌五星，离奥体约2.5公里打车起步价；要舒适度选它，要步行距离选前面几家。"},
+  {n:"东百兰斯酒店（东街口）",tier:"9/6换住",price:"¥300–450/晚",c:[26.0851,119.2989],r:"方案C第二晚用：高层南向房正对三坊七巷，早餐口碑好。"},
+  {n:"锦江都城酒店（福州三坊七巷店）",tier:"9/6换住",price:"¥280–380/晚",c:[26.0872,119.2985],r:"方案C第二晚的省钱选择：房间大、安静，标准连锁品质。"}],
  平潭:[
-  {n:"坛南湾·栖沙度假酒店",tier:"度假",price:"¥400–700/晚",c:[25.4409,119.7707],r:"坛南湾沙滩正对面，出门就是海；9月非旺季价格回落明显。"},
-  {n:"坛南湾悬崖海景民宿（艺墅一类）",tier:"民宿",price:"¥300–600/晚",c:[25.4558,119.7938],r:"坛南湾北端崖上，房间看海视野最好；离吃饭的地方要打车。"},
-  {n:"猴研岛/东澳石头厝民宿",tier:"民宿",price:"¥250–450/晚",c:[25.4576,119.8507],r:"离猴研岛最近，早上看日出方便，但离坛南湾日落要开车25分钟。"},
-  {n:"龙凤头县城酒店（华美达/维也纳一类）",tier:"经济",price:"¥200–350/晚",c:[25.49,119.80],r:"县城内，海鲜店和'时来运转'老店走路可到，海景一般。"}],
+  {n:"城市便捷酒店（平潭龙凤头海滨店）",tier:"¥200–300",price:"¥200–300/晚",c:[25.4940,119.7970],r:"县城海滨，走路到时来运转老店和海鲜街；海景一般。"},
+  {n:"维也纳国际酒店（平潭店）",tier:"¥200–300",price:"¥230–320/晚",c:[25.5010,119.7905],r:"县城里最稳的连锁，隔音好；离坛南湾要打车15分钟。"},
+  {n:"石头会唱歌艺术聚落（北港村）",tier:"¥300–400",price:"¥300–450/晚",c:[25.5600,119.7700],r:"北港村最有名的石头厝民宿，住在9/7上午的行程里；离坛南湾日落约25分钟车程。"},
+  {n:"栖沙度假酒店（坛南湾）",tier:"¥400–500",price:"¥400–500/晚",c:[25.4409,119.7707],r:"坛南湾沙滩正对面，阳台看日出日落；9月非旺季这个价能拿到好房型。"}],
  泉州:[
-  {n:"开普顿钟楼酒店（KAIPUU BELFRY，希尔顿SLH）",tier:"高端",price:"¥700–1100/晚",c:[24.9125,118.5913],r:"东街钟楼旁，古城最好地段的精品酒店，早餐有面线糊、花生汤；服务细节有评价说不稳。"},
-  {n:"西街古厝民宿（满居无问东西 / 步进客栈等）",tier:"古厝民宿",price:"¥250–450/晚",c:[24.9146,118.5821],r:"闽南红砖古厝改造，天井、燕尾脊，走两分钟到开元寺；房间小、隔音一般，图的是氛围。"},
-  {n:"泉州万达文华",tier:"高端",price:"¥600–900/晚",c:[24.87,118.63],r:"浦西万达，设施新，但离古城要打车20分钟，不如住西街方便。"},
-  {n:"中山路/涂门街商务酒店（亚朵/全季一类）",tier:"连锁",price:"¥300–420/晚",c:[24.910,118.595],r:"步行到清净寺、关岳庙；夜里牛肉羹宵夜就在楼下。"}],
+  {n:"如家精选酒店（泉州钟楼西街店）",tier:"¥200–300",price:"¥200–300/晚",c:[24.9130,118.5900],r:"位置和贵的一样好，房间小一点；古城夜里安静。"},
+  {n:"亚朵酒店（泉州中山路店）",tier:"¥300–400",price:"¥300–400/晚",c:[24.9090,118.5930],r:"新装修连锁舒适度，走到清净寺、关岳庙两三分钟。"},
+  {n:"全季酒店（泉州涂门街店）",tier:"¥300–400",price:"¥300–400/晚",c:[24.9075,118.5945],r:"和亚朵同档，宵夜的牛肉羹就在楼下街口。"},
+  {n:"满居·无问东西（西街古厝民宿）",tier:"¥400–500",price:"¥400–500/晚",c:[24.9146,118.5821],r:"红砖古厝天井庭院，走两分钟到开元寺；隔音是老宅通病。"}],
  厦门:[
-  {n:"厦门康莱德酒店",tier:"奢华",price:"¥1200–1800/晚",c:[24.4353,118.0891],r:"演武大桥旁，高层海景是全厦门最好的之一，走路到沙坡尾、厦大；房价含早，贵在景。"},
-  {n:"全季·中山路步行街店",tier:"连锁",price:"¥350–500/晚",c:[24.4526,118.0816],r:"中山路里，去轮渡码头10分钟，楼下沙茶面店成排，免费洗衣；房间紧凑。"},
-  {n:"厦门宾馆",tier:"老牌园林",price:"¥450–650/晚",c:[24.4568,118.0937],r:"市中心的老牌园林式酒店，绿化极好，前台可代订土楼一日游；部分楼房偏旧。"},
-  {n:"沙坡尾民宿/万澳酒店",tier:"民宿",price:"¥300–500/晚",c:[24.4369,118.0877],r:"住进艺术区，晚上出门就是酒馆和海鲜，年轻氛围。"},
-  {n:"鼓浪屿岛上老别墅民宿",tier:"岛上民宿",price:"¥400–800/晚",c:[24.445,118.068],r:"游客走后的鼓浪屿夜晚很安静；代价是行李要自己拎过船、上下坡，且末班船有时间限制。"}],
+  {n:"汉庭酒店（厦门中山路轮渡店）",tier:"¥200–300",price:"¥200–300/晚",c:[24.4540,118.0800],r:"去鼓浪屿码头步行10分钟；周五周六可能略超¥300。"},
+  {n:"如家酒店（厦门中山路店）",tier:"¥200–300",price:"¥200–300/晚",c:[24.4555,118.0825],r:"同档备选，两家比价哪家便宜订哪家。"},
+  {n:"全季酒店（厦门中山路步行街店）",tier:"¥300–400",price:"¥300–400/晚",c:[24.4526,118.0816],r:"楼下沙茶面店成排，免费洗衣；两晚不换酒店的稳妥之选。"},
+  {n:"厦门宾馆",tier:"¥400–500",price:"¥400–500/晚",c:[24.4568,118.0937],r:"市中心园林老牌，绿化极好，前台可代订土楼一日游。"},
+  {n:"万澳酒店（沙坡尾店）",tier:"¥400–500",price:"¥380–480/晚",c:[24.4369,118.0877],r:"住进艺术区，晚上出门就是酒馆和海鲜，年轻氛围。"}],
  南靖:[
-  {n:"云水谣土楼民宿（长教一带）",tier:"土楼民宿",price:"¥200–400/晚",c:[24.5147,117.3573],r:"住在土楼里，清晨没人时拍古榕与溪水；条件简单，卫浴多为公共或改造。"},
-  {n:"漳州芗江宾馆（南门）",tier:"商务",price:"¥350–500/晚",c:[24.5126,117.6538],r:"2023年翻新，离漳州古城15分钟步行；被吐槽的是吸烟房残留烟味。"},
-  {n:"漳州宾馆",tier:"老牌",price:"¥300–450/晚",c:[24.5143,117.6564],r:"园林式大院，厦门机场大巴直达门口——这是它对返程最实用的一点。"}],
+  {n:"云水谣土楼民宿（古镇内标间）",tier:"¥200–300",price:"¥200–300/晚",c:[24.5147,117.3573],r:"住进土楼本身，清晨没人时拍古榕；卫浴简单，介意就选漳州市区。"},
+  {n:"漳州宾馆",tier:"¥300–400",price:"¥300–450/晚",c:[24.5143,117.6564],r:"园林式大院，厦门机场大巴直达门口，对9/11返程最实用。"},
+  {n:"芗江宾馆（漳州古城南门）",tier:"¥300–400",price:"¥350–500/晚",c:[24.5126,117.6538],r:"2023年翻新，步行15分钟到古城；订无烟房。"},
+  {n:"云水谣溪岸景观民宿",tier:"¥400–500",price:"¥400–500/晚",c:[24.5160,117.3590],r:"溪边观景房带阳台，比标间贵一档；仅方案A住漳州时需要。"}],
 };
 const FOOD = {
  福州:[
@@ -397,10 +406,10 @@ const PLANS = [
  {id:"A",name:"方案 A · 五城全走",sub:"节奏紧，打卡全覆盖",cities:["福州","平潭","泉州","厦门","漳州"],
   intro:"五座城市全部保留，每城约一天。适合体力好、想把漳州土楼和古城一并看完的人；代价是每天都在赶车，泉州只能给一天。",
   days:[
-   {ck:"福州",d:"9/5",w:"周六",city:"福州",title:"抵达福州，夜游三坊七巷",stops:[
-     ["fz_apt","下午"],["fz_stay","傍晚"],["fz_sfqx","天黑后"],["fz_jcy","晚饭"]]},
-   {ck:"平潭",d:"9/6",w:"周日",city:"福州 → 平潭",title:"榕城半日，海岛看日落",stops:[
-     ["fz_gbh","早饭"],["fz_xh","上午"],["fz_gs","上午"],["fz_sta","13:00 动车"],["pt_sta","14:00"],["pt_stay","入住"],["pt_tnw","日落"],["pt_sea","晚饭"]]},
+   {ck:"福州",d:"9/5",w:"周六",city:"福州",title:"抵达福州 · 晚上奥体演唱会",stops:[
+     ["fz_apt","下午"],["fz_aoti_stay","放行李"],["fz_aigo","17:00前晚饭"],["fz_aoti","19:13 开演"]]},
+   {ck:"平潭",d:"9/6",w:"周日",city:"福州 → 平潭",title:"补上三坊七巷，下午上岛",stops:[
+     ["fz_gbh","早饭"],["fz_sfqx","上午"],["fz_jcy","午饭·佛跳墙"],["fz_sta","13:30 动车"],["pt_sta","14:00"],["pt_stay","入住"],["pt_tnw","日落"],["pt_sea","晚饭"]]},
    {ck:"泉州",d:"9/7",w:"周一",city:"平潭 → 泉州",title:"石头厝与海蚀岸，转赴泉州",stops:[
      ["pt_bg","早上"],["pt_hy","上午"],["pt_food","午饭"],["pt_sta","14:00 动车"],["qz_sta","16:00"],["qz_stay","入住"],["qz_xj","晚饭"],["qz_kys","夜景"]]},
    {ck:"泉州",d:"9/8",w:"周二",city:"泉州",title:"宋元刺桐：寺庙群、蟳埔、洛阳桥",stops:[
@@ -414,10 +423,10 @@ const PLANS = [
  {id:"B",name:"方案 B · 推荐",sub:"四城 + 土楼一日游",rec:true,cities:["福州","平潭","泉州","厦门","漳州"],off:["漳州"],
   intro:"放弃漳州市区，把南靖土楼改成从厦门出发的一日游。每座城市都多出半天喘口气，泉州拿到完整的一天，最后两晚不换酒店。",
   days:[
-   {ck:"福州",d:"9/5",w:"周六",city:"福州",title:"抵达福州，夜游三坊七巷",stops:[
-     ["fz_apt","下午"],["fz_stay","傍晚"],["fz_sfqx","天黑后"],["fz_jcy","晚饭"],["fz_tl","宵夜"]]},
-   {ck:"平潭",d:"9/6",w:"周日",city:"福州 → 平潭",title:"鼓山、西湖，下午上岛",stops:[
-     ["fz_gbh","早饭"],["fz_gs","上午"],["fz_xh","中午前"],["fz_sta","14:00 动车"],["pt_sta","15:00"],["pt_stay","入住"],["pt_tnw","日落"],["pt_sea","晚饭"]]},
+   {ck:"福州",d:"9/5",w:"周六",city:"福州",title:"抵达福州 · 晚上奥体演唱会",stops:[
+     ["fz_apt","下午"],["fz_aoti_stay","放行李"],["fz_aigo","17:00前晚饭"],["fz_aoti","19:13 开演"]]},
+   {ck:"平潭",d:"9/6",w:"周日",city:"福州 → 平潭",title:"补上三坊七巷，下午上岛",stops:[
+     ["fz_gbh","早饭"],["fz_sfqx","上午"],["fz_jcy","午饭·佛跳墙"],["fz_sta","14:00 动车"],["pt_sta","15:00"],["pt_stay","入住"],["pt_tnw","日落"],["pt_sea","晚饭"]]},
    {ck:"泉州",d:"9/7",w:"周一",city:"平潭 → 泉州",title:"北港、猴研岛，转赴泉州",stops:[
      ["pt_bg","早上"],["pt_hy","上午"],["pt_food","午饭"],["pt_sta","14:00 动车"],["qz_sta","16:00"],["qz_stay","入住"],["qz_xj","晚饭"],["qz_kys","夜景"]]},
    {ck:"泉州",d:"9/8",w:"周二",city:"泉州",title:"全程文化含量最高的一天",stops:[
@@ -431,10 +440,10 @@ const PLANS = [
  {id:"C",name:"方案 C · 人文深度",sub:"跳过平潭，泉州两天",cities:["福州","平潭","泉州","厦门","漳州"],off:["平潭","漳州"],
   intro:"台风季平潭一旦风浪大就没得玩，'蓝眼泪'也早过季（4–6月）。这套把海岛换成泉州第二天与崇武古城，福州也多半天，整体最从容。",
   days:[
-   {ck:"福州",d:"9/5",w:"周六",city:"福州",title:"抵达福州，夜游三坊七巷",stops:[
-     ["fz_apt","下午"],["fz_stay","傍晚"],["fz_sfqx","天黑后"],["fz_jcy","晚饭"]]},
-   {ck:"福州",d:"9/6",w:"周日",city:"福州",title:"鼓山、烟台山、上下杭",stops:[
-     ["fz_gbh","早饭"],["fz_gs","上午"],["fz_tl","午饭"],["fz_yts","下午"],["fz_sxh","晚上"],["fz_stay","住"]]},
+   {ck:"福州",d:"9/5",w:"周六",city:"福州",title:"抵达福州 · 晚上奥体演唱会",stops:[
+     ["fz_apt","下午"],["fz_aoti_stay","放行李"],["fz_aigo","17:00前晚饭"],["fz_aoti","19:13 开演"]]},
+   {ck:"福州",d:"9/6",w:"周日",city:"福州",title:"三坊七巷、烟台山、上下杭",stops:[
+     ["fz_gbh","早饭"],["fz_sfqx","上午"],["fz_tl","午饭"],["fz_yts","下午"],["fz_sxh","晚上"],["fz_stay2","换住市区"]]},
    {ck:"泉州",d:"9/7",w:"周一",city:"福州 → 泉州",title:"上午动车，古城寺庙群",stops:[
      ["fz_sta","9:00 动车"],["qz_sta","10:30"],["qz_stay","入住"],["qz_jmy","午饭"],["qz_kys","下午"],["qz_cts","下午"],["qz_qjs","傍晚"],["qz_xj","晚饭"]]},
    {ck:"泉州",d:"9/8",w:"周二",city:"泉州",title:"蟳埔、崇武古城、洛阳桥",stops:[
@@ -466,7 +475,9 @@ const CC=c=>wgs2gcj(c);   // 高德底图 GCJ-02 显示坐标
 const AMAP_WEB_SERVICE_KEY="752d1685aa6c16e6fa14d71bdd3fb0a8";   // 高德 Web服务 key（POI 评分/人均/营业时间）
 const AMAP_JS_KEY="b6e1f11bbe39afd4259711cc51afd9fe", AMAP_JS_SECURITY="a7830057aee9de367e12da06054cbd38"; // 备用：切换到高德 JS API 时使用
 const poiCache={};
-function kw(name){return name.split('（')[0].split('/')[0].trim()}
+function kw(name){let s=name.split("/")[0];
+  s=s.replace(/（([^）]*)）/g,(m,g)=>/(一带|周边|方案|一类|等|早市|见下方)/.test(g)?" ":" "+g+" ");
+  return s.replace(/\s+/g," ").trim()}
 async function fetchPoi(name,cityKey){
   const k=kw(name)+"|"+cityKey; if(poiCache[k]!==undefined)return poiCache[k];
   try{
@@ -493,10 +504,56 @@ async function fillPoi(){
     const slot=el.querySelector(".poi-slot"); if(!slot)return;
     slot.innerHTML=poiBadge(info);
     if(info&&info.addr){slot.title=info.addr}
+    if(info&&info.id){const a=el.querySelector(".amap-link");if(a)a.href=amapDetailUrl(info.id)}
   }));
 }
 const CITY_OF={福州:"福州",平潭:"平潭",泉州:"泉州",厦门:"厦门",南靖:"漳州"};
-function amapUrl(name,cityKey){return `https://uri.amap.com/search?keyword=${encodeURIComponent(name.split('（')[0].split('/')[0].trim())}&city=${encodeURIComponent(CITY_OF[cityKey]||'')}&callnative=1`}   // 当前底图下的显示坐标
+const HOTEL_ANCHOR={福州:{c:[26.028,119.262],n:"海峡奥体中心"},平潭:{c:[25.428,119.780],n:"坛南湾"},泉州:{c:[24.915,118.580],n:"开元寺"},厦门:{c:[24.449,118.082],n:"轮渡码头"},南靖:{c:[24.5147,117.3573],n:"云水谣"}};
+const hotelCache={};
+async function fetchNearbyHotels(cityKey){
+  if(hotelCache[cityKey]!==undefined)return hotelCache[cityKey];
+  const a=HOTEL_ANCHOR[cityKey]; if(!a)return null;
+  const [glat,glng]=wgs2gcj(a.c);
+  const BAD=/(公寓|青年旅舍|青旅|招待所|旅馆|客房|洗浴|足浴|电竞|情侣主题|驿站)/;
+  const BRAND=/(亚朵|全季|汉庭|如家|维也纳|桔子|丽枫|美居|智选假日|假日酒店|希尔顿|万豪|凯悦|喜来登|皇冠假日|洲际|锦江|城市便捷|希岸|轻居|开元|君亭|万达|世纪金源|康莱德|宾馆)/;
+  const KEEP_BNB=(cityKey==="平潭"||cityKey==="南靖");   // 海岛/土楼保留民宿
+  try{
+    const u=`https://restapi.amap.com/v5/place/around?key=${AMAP_WEB_SERVICE_KEY}&location=${glng.toFixed(6)},${glat.toFixed(6)}&types=100000&radius=3000&sortrule=weight&page_size=25&show_fields=business`;
+    const j=await (await fetch(u)).json();
+    let list=(j.pois||[]).map(p=>({id:p.id,name:p.name,addr:p.address||"",dist:Math.round(+p.distance||0),rating:parseFloat((p.business||{}).rating)||null,loc:p.location}));
+    list=list.filter(h=>!BAD.test(h.name));
+    if(!KEEP_BNB)list=list.filter(h=>!/民宿|客栈/.test(h.name));
+    // 打分：评分为主，品牌加权，距离轻微惩罚
+    list.forEach(h=>{h.score=(h.rating||3.6)+(BRAND.test(h.name)?0.35:0)-h.dist/12000});
+    list.sort((x,y)=>y.score-x.score);
+    // 评分过低的挪到末尾之外
+    const good=list.filter(h=>h.rating===null||h.rating>=4.0);
+    hotelCache[cityKey]=(good.length>=5?good:list).slice(0,8);
+  }catch(e){hotelCache[cityKey]=null}
+  return hotelCache[cityKey];
+}
+function hotelRow(h,anchor){
+  return `<div class="opt live" data-kind="stay" data-c="${h.loc.split(',').reverse().join(',')}" data-gcj="1" data-n="${h.name}">
+    <div class="n">${h.name}</div><div class="p">${h.dist}m<small style="color:var(--ink-2)"> 距${anchor}</small></div>
+    <div class="r">${h.rating?'<span class="g poi">高德 ★ '+h.rating.toFixed(1)+'</span>':'<span class="tier">暂无评分</span>'}${h.addr}
+      <a class="g" href="${h.id?amapDetailUrl(h.id):`https://uri.amap.com/marker?position=${h.loc}&name=${encodeURIComponent(h.name)}&callnative=1`}" target="_blank" rel="noopener" onclick="event.stopPropagation()">高德 ↗</a>
+      <a class="g ctrip" href="${ctripUrl(h.name)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">携程搜索 ↗</a></div></div>`;
+}
+async function fillNearbyHotels(){
+  const box=document.getElementById("liveHotels-"+activeIdx); if(!box)return;
+  const d=plan.days[activeIdx];
+  const sc=(d.ck==="南靖"&&!d.stops.some(([id])=>id==="zz_stay"))?"厦门":d.ck;
+  const list=await fetchNearbyHotels(sc);
+  const a=HOTEL_ANCHOR[sc];
+  if(!list||!list.length){box.innerHTML='<div class="m" style="font-size:12px;color:var(--ink-2)">高德周边酒店拉取失败（网络或配额），可用上方"携程搜索"。</div>';return}
+  box.innerHTML=list.map(h=>hotelRow(h,a.n)).join("");
+  box.querySelectorAll(".opt").forEach(o=>o.onclick=e=>{const c=o.dataset.c.split(",").map(Number);map.flyTo(c,15,{duration:.6})});
+}
+function distM(a,b){const R=6371000,r=Math.PI/180,dLa=(b[0]-a[0])*r,dLn=(b[1]-a[1])*r,x=Math.sin(dLa/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dLn/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
+function fmtD(m){return m<1000?Math.round(m/10)*10+" m":(m/1000).toFixed(m<10000?1:0)+" km"}
+function ctripUrl(name){return `https://you.ctrip.com/SearchSite/?query=${encodeURIComponent(name.split("（")[0].split("/")[0].trim())}`}
+function amapMarkerUrl(name,wgsCoords){const [la,ln]=wgs2gcj(wgsCoords);return `https://uri.amap.com/marker?position=${ln.toFixed(6)},${la.toFixed(6)}&name=${encodeURIComponent(kw(name))}&callnative=1`}
+function amapDetailUrl(id){return `https://www.amap.com/detail/${id}`}   // 当前底图下的显示坐标
 amap.on("load",()=>document.getElementById("tileNote").classList.remove("show"));
 
 const CITY_LABELS=[["福州",[26.13,119.20]],["平潭",[25.60,119.72]],["泉州",[24.98,118.50]],["厦门",[24.40,118.02]],["漳州",[24.55,117.58]]];
@@ -513,7 +570,7 @@ function buildMarkers(){
   used.forEach(id=>{const p=P[id];
     const ck={fz:"福州",pt:"平潭",qz:"泉州",xm:"厦门",zz:"南靖"}[id.slice(0,2)];
     const m=L.marker(CC(p.c),{icon:mkIcon(p.k,false)}).addTo(map)
-      .bindPopup(`<div class="pk">${{sight:"景点",food:"吃饭",stay:"住宿",transit:"交通"}[p.k]}</div><div class="pt">${p.n}</div><div>${p.d}</div><a class="amaplink" href="${amapUrl(p.n,ck)}" target="_blank" rel="noopener">在高德地图打开 ↗</a>`);
+      .bindPopup(`<div class="pk">${{sight:"景点",food:"吃饭",stay:"住宿",transit:"交通"}[p.k]}</div><div class="pt">${p.n}</div><div>${p.d}</div><a class="amaplink" href="${amapMarkerUrl(p.n,p.c)}" target="_blank" rel="noopener">在高德地图打开 ↗</a>`);
     markers[id]=m;});
   if(routeLine)map.removeLayer(routeLine);
   const pts=[];plan.days.forEach(day=>day.stops.forEach(([id])=>{if(P[id].k!=="food")pts.push(CC(P[id].c))}));
@@ -558,13 +615,13 @@ function renderDays(){
       <div><h3>${d.title}</h3><div class="sum">${d.stops.length} 个站点 · ${summary(d)}</div></div>
       <span class="chev">▾</span>
     </button>
-    <div class="day-body"><div class="wx loading" id="wx-${i}"><span class="ico">⛅</span><div><b>天气预报加载中…</b><div class="m">数据来自 open-meteo.com，9/5–9/11 在16天预报窗口内，每次打开自动更新</div></div></div>${d.stops.map(([id,t])=>{const p=P[id];return `
+    ${""/* stops rendered with inter-stop distances */}<div class="day-body"><div class="wx loading" id="wx-${i}"><span class="ico">⛅</span><div><b>天气预报加载中…</b><div class="m">数据来自 open-meteo.com，9/5–9/11 在16天预报窗口内，每次打开自动更新</div></div></div>${d.stops.map(([id,t],si)=>{const p=P[id];const prev=si?P[d.stops[si-1][0]]:null;const dd=prev?distM(prev.c,p.c):0;const dtxt=prev&&dd>150?`<span style="color:var(--ink-2);font-weight:400"> · 距上一站约 ${fmtD(dd)}</span>`:``;return `
       <div class="stop ${p.k}" data-id="${id}" style="color:${COL[p.k]}">
         <div class="dot" style="background:${COL[p.k]}"></div>
-        <div><div class="t">${t}</div><div class="n" style="color:var(--ink)">${p.n}</div><div class="d">${p.d}</div></div>
+        <div><div class="t">${t}${dtxt}</div><div class="n" style="color:var(--ink)">${p.n}</div><div class="d">${p.d}</div></div>
       </div>`}).join("")}${optsHtml(d,i)}</div>
    </article>`).join("");
-  document.querySelectorAll(".day-head").forEach(b=>b.onclick=()=>{activeIdx=+b.closest(".day").dataset.i;renderDays();refreshMarkers();showOptMarkers();bindOpts();renderWeather();fillPoi();flyDay();if(isMobile){const el=document.querySelector(".day.active");const top=el.getBoundingClientRect().top+window.scrollY-(document.querySelector(".mapcol").offsetHeight+document.querySelector(".tabs").offsetHeight+6);window.scrollTo({top,behavior:"smooth"})}});
+  document.querySelectorAll(".day-head").forEach(b=>b.onclick=()=>{activeIdx=+b.closest(".day").dataset.i;renderDays();refreshMarkers();showOptMarkers();bindOpts();renderWeather();fillPoi();fillNearbyHotels();flyDay();if(isMobile){const el=document.querySelector(".day.active");const top=el.getBoundingClientRect().top+window.scrollY-(document.querySelector(".mapcol").offsetHeight+document.querySelector(".tabs").offsetHeight+6);window.scrollTo({top,behavior:"smooth"})}});
   document.querySelectorAll(".stop").forEach(s=>{
     s.onclick=()=>{const m=markers[s.dataset.id];if(!m)return;if(!map.hasLayer(m))m.addTo(map);map.flyTo(m.getLatLng(),Math.max(map.getZoom(),13),{duration:.6});m.openPopup()};
     s.onmouseenter=()=>{const m=markers[s.dataset.id];if(m&&map.hasLayer(m))m.setZIndexOffset(2000)};
@@ -574,13 +631,14 @@ function renderDays(){
 function optsHtml(d,i){
   const sc = (d.ck==="南靖" && !d.stops.some(([id])=>id==="zz_stay")) ? "厦门" : d.ck;
   const stays=STAY[sc]||[], foods=FOOD[d.ck]||[];
-  const row=(o,kind,j,pri,ck)=>`<div class="opt ${pri?'primary':''}" data-kind="${kind}" data-c="${o.c.join(',')}" data-n="${o.n}" data-ck="${ck}">
-     <div class="n">${o.n}${o.tag?'<small>'+o.tag+'</small>':''}</div><div class="p">${o.price}</div>
-     <div class="r">${o.tier?'<span class="tier">'+o.tier+'</span>':''}<span class="poi-slot"><span class="tier">高德数据加载中…</span></span><a class="g" href="${amapUrl(o.n,ck)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">在高德打开 ↗</a>${o.r}</div></div>`;
+  const row=(o,kind,j,pri,ck)=>{const an=HOTEL_ANCHOR[ck];const dd=an?fmtD(distM(o.c,an.c)):null;return `<div class="opt ${pri?'primary':''}" data-kind="${kind}" data-c="${o.c.join(',')}" data-n="${o.n}" data-ck="${ck}">
+     <div class="n">${o.n}${o.tag?'<small>'+o.tag+'</small>':''}</div><div class="p">${o.price}${dd?`<small style="display:block;color:var(--ink-2);font-family:var(--sans)">距${an.n} ${dd}</small>`:``}</div>
+     <div class="r">${o.tier?'<span class="tier">'+o.tier+'</span>':''}<span class="poi-slot"><span class="tier">高德数据加载中…</span></span><a class="g amap-link" href="${amapMarkerUrl(o.n,o.c)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">高德 ↗</a>${kind==="stay"?`<a class="g ctrip" href="${ctripUrl(o.n)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">携程搜索 ↗</a>`:``}${o.r}</div></div>`};
   return `<div class="opts">
     <h5>住宿可选（${sc}）· 首选已标金</h5>${stays.map((o,j)=>row(o,'stay',j,j===0,sc)).join("")}
+    <h5>高德实时 · ${(d.ck==='南靖'&&!d.stops.some(([id])=>id==='zz_stay'))?'厦门':d.ck}${HOTEL_ANCHOR[(d.ck==='南靖'&&!d.stops.some(([id])=>id==='zz_stay'))?'厦门':d.ck].n}周边酒店（综合排序）</h5><div id="liveHotels-${i}"><div class="m" style="font-size:12px;color:var(--ink-2)">加载中…</div></div>
     <h5>餐厅可选（${d.ck}）</h5>${foods.map((o,j)=>row(o,'food',j,false,d.ck)).join("")}
-    <div class="m" style="font-size:11px;color:var(--ink-2);margin-top:6px">灰色价格为估算；蓝底"高德 ★评分 · 人均 · 营业时间"为高德地图实时数据（按店名+城市匹配首条结果，同名店请点开核对）。</div>
+    <div class="m" style="font-size:11px;color:var(--ink-2);margin-top:6px">价格段为9月上旬平日参考；连锁品牌具体门店名以高德/携程实际搜索结果为准。9/5演唱会当晚奥体周边会涨价，确定后立刻下单。蓝标为高德实时数据；住宿另有"携程搜索"跳转携程查看报价与评价。</div>
   </div>`;
 }
 let optMarkers=[];
@@ -590,7 +648,7 @@ function showOptMarkers(){
   const sc = (d.ck==="南靖" && !d.stops.some(([id])=>id==="zz_stay")) ? "厦门" : d.ck;
   const list=[...(filters.stay?(STAY[sc]||[]).map(o=>({...o,k:"stay"})):[]),...(filters.food?(FOOD[d.ck]||[]).map(o=>({...o,k:"food"})):[])];
   list.forEach(o=>{const m=L.marker(CC(o.c),{icon:L.divIcon({className:"",html:`<div class="pin opt-pin" style="background:${COL[o.k]}"><b>${SYM[o.k]}</b></div>`,iconSize:[22,22],iconAnchor:[11,22],popupAnchor:[0,-20]})}).addTo(map)
-    .bindPopup(`<div class="pk">${o.k==="stay"?"住宿可选":"餐厅可选"} · ${o.tier||o.tag||""}</div><div class="pt">${o.n}</div><div style="color:#B5423A">${o.price}</div><div>${(()=>{const i=poiCache[kw(o.n)+'|'+(o.k==='stay'?sc:d.ck)];return i?'<span class="g poi" style="font-size:11px;background:#e6eef1;color:#1F4E5F;border-radius:4px;padding:0 6px">高德 '+[i.rating?'★ '+i.rating:'',i.cost?'人均 ¥'+i.cost:'',i.open||''].filter(Boolean).join(' · ')+'</span>':''})()}</div><div>${o.r}</div><a class="amaplink" href="${amapUrl(o.n,o.k==='stay'?sc:d.ck)}" target="_blank" rel="noopener">在高德地图打开 ↗</a>`);
+    .bindPopup(`<div class="pk">${o.k==="stay"?"住宿可选":"餐厅可选"} · ${o.tier||o.tag||""}</div><div class="pt">${o.n}</div><div style="color:#B5423A">${o.price}</div><div>${(()=>{const i=poiCache[kw(o.n)+'|'+(o.k==='stay'?sc:d.ck)];return i?'<span class="g poi" style="font-size:11px;background:#e6eef1;color:#1F4E5F;border-radius:4px;padding:0 6px">高德 '+[i.rating?'★ '+i.rating:'',i.cost?'人均 ¥'+i.cost:'',i.open||''].filter(Boolean).join(' · ')+'</span>':''})()}</div><div>${o.r}</div><a class="amaplink" href="${amapMarkerUrl(o.n,o.c)}" target="_blank" rel="noopener">在高德地图打开 ↗</a>`);
     optMarkers.push(m)});
 }
 const WX={0:["☀️","晴"],1:["🌤","晴间多云"],2:["⛅","多云"],3:["☁️","阴"],45:["🌫","雾"],48:["🌫","雾"],51:["🌦","毛毛雨"],53:["🌦","小雨"],55:["🌧","小雨"],61:["🌧","小雨"],63:["🌧","中雨"],65:["🌧","大雨"],80:["🌦","阵雨"],81:["🌧","阵雨"],82:["⛈","强阵雨"],95:["⛈","雷阵雨"],96:["⛈","雷雨冰雹"],99:["⛈","雷雨冰雹"]};
@@ -616,7 +674,7 @@ function renderWeather(){
 }
 function summary(d){const c={sight:0,food:0,stay:0};d.stops.forEach(([id])=>{if(c[P[id].k]!==undefined)c[P[id].k]++});return `${c.sight}景点 ${c.food}餐 ${c.stay?'住'+P[d.stops.find(([id])=>P[id].k==='stay')[0]].n.split(' ')[0]:''}`}
 function bindOpts(){document.querySelectorAll(".opt").forEach(o=>o.onclick=e=>{e.stopPropagation();const c=CC(o.dataset.c.split(",").map(Number));map.flyTo(c,Math.max(map.getZoom(),14),{duration:.6});const m=optMarkers.find(m=>{const l=m.getLatLng();return Math.abs(l.lat-c[0])<1e-6&&Math.abs(l.lng-c[1])<1e-6});if(m)m.openPopup()})}
-function renderAll(){drawCityLabels();renderTabs();renderStrip();renderDays();buildMarkers();refreshMarkers();showOptMarkers();bindOpts();loadWeather();fillPoi()}
+function renderAll(){drawCityLabels();renderTabs();renderStrip();renderDays();buildMarkers();refreshMarkers();showOptMarkers();bindOpts();loadWeather();fillPoi();fillNearbyHotels()}
 
 document.querySelectorAll("#filters .chip").forEach(ch=>ch.onclick=()=>{const k=ch.dataset.k;filters[k]=!filters[k];ch.classList.toggle("off",!filters[k]);refreshMarkers();showOptMarkers()});
 document.getElementById("fitAll").onclick=fitAll;
