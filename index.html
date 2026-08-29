@@ -532,12 +532,12 @@ async function fetchNearbyHotels(cityKey){
   }catch(e){hotelCache[cityKey]=null}
   return hotelCache[cityKey];
 }
-function hotelRow(h,anchor){
+function hotelRow(h,anchor,ckey){
   return `<div class="opt live" data-kind="stay" data-c="${h.loc.split(',').reverse().join(',')}" data-gcj="1" data-n="${h.name}">
     <div class="n">${h.name}</div><div class="p">${h.dist}m<small style="color:var(--ink-2)"> 距${anchor}</small></div>
     <div class="r">${h.rating?'<span class="g poi">高德 ★ '+h.rating.toFixed(1)+'</span>':'<span class="tier">暂无评分</span>'}${h.addr}
       <a class="g" href="${h.id?amapDetailUrl(h.id):`https://uri.amap.com/marker?position=${h.loc}&name=${encodeURIComponent(h.name)}&callnative=1`}" target="_blank" rel="noopener" onclick="event.stopPropagation()">高德 ↗</a>
-      <a class="g ctrip" href="${ctripUrl(h.name)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">携程搜索 ↗</a></div></div>`;
+      <a class="g ctrip" href="${ctripUrl(h.name,ckey)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">携程查价 ↗</a></div></div>`;
 }
 async function fillNearbyHotels(){
   const box=document.getElementById("liveHotels-"+activeIdx); if(!box)return;
@@ -546,12 +546,16 @@ async function fillNearbyHotels(){
   const list=await fetchNearbyHotels(sc);
   const a=HOTEL_ANCHOR[sc];
   if(!list||!list.length){box.innerHTML='<div class="m" style="font-size:12px;color:var(--ink-2)">高德周边酒店拉取失败（网络或配额），可用上方"携程搜索"。</div>';return}
-  box.innerHTML=list.map(h=>hotelRow(h,a.n)).join("");
+  box.innerHTML=list.map(h=>hotelRow(h,a.n,sc)).join("");
   box.querySelectorAll(".opt").forEach(o=>o.onclick=e=>{const c=o.dataset.c.split(",").map(Number);map.flyTo(c,15,{duration:.6})});
 }
 function distM(a,b){const R=6371000,r=Math.PI/180,dLa=(b[0]-a[0])*r,dLn=(b[1]-a[1])*r,x=Math.sin(dLa/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dLn/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
 function fmtD(m){return m<1000?Math.round(m/10)*10+" m":(m/1000).toFixed(m<10000?1:0)+" km"}
-function ctripUrl(name){return `https://you.ctrip.com/SearchSite/?query=${encodeURIComponent(name.split("（")[0].split("/")[0].trim())}`}
+const CTRIP_CITY={福州:[258,"福州","2026/09/05","2026/09/06"],平潭:[392,"平潭","2026/09/06","2026/09/07"],泉州:[406,"泉州","2026/09/07","2026/09/09"],厦门:[25,"厦门","2026/09/09","2026/09/11"],南靖:[560,"漳州","2026/09/10","2026/09/11"]};
+function ctripUrl(name,cityKey){
+  const c=CTRIP_CITY[cityKey]||CTRIP_CITY.福州;
+  return `https://hotels.ctrip.com/hotels/list?countryId=1&city=${c[0]}&display=${encodeURIComponent(c[1])}&checkin=${c[2]}&checkout=${c[3]}&crn=1&adult=1&keyword=${encodeURIComponent(kw(name))}`;
+}
 function amapMarkerUrl(name,wgsCoords){const [la,ln]=wgs2gcj(wgsCoords);return `https://uri.amap.com/marker?position=${ln.toFixed(6)},${la.toFixed(6)}&name=${encodeURIComponent(kw(name))}&callnative=1`}
 function amapDetailUrl(id){return `https://www.amap.com/detail/${id}`}   // 当前底图下的显示坐标
 amap.on("load",()=>document.getElementById("tileNote").classList.remove("show"));
@@ -633,12 +637,12 @@ function optsHtml(d,i){
   const stays=STAY[sc]||[], foods=FOOD[d.ck]||[];
   const row=(o,kind,j,pri,ck)=>{const an=HOTEL_ANCHOR[ck];const dd=an?fmtD(distM(o.c,an.c)):null;return `<div class="opt ${pri?'primary':''}" data-kind="${kind}" data-c="${o.c.join(',')}" data-n="${o.n}" data-ck="${ck}">
      <div class="n">${o.n}${o.tag?'<small>'+o.tag+'</small>':''}</div><div class="p">${o.price}${dd?`<small style="display:block;color:var(--ink-2);font-family:var(--sans)">距${an.n} ${dd}</small>`:``}</div>
-     <div class="r">${o.tier?'<span class="tier">'+o.tier+'</span>':''}<span class="poi-slot"><span class="tier">高德数据加载中…</span></span><a class="g amap-link" href="${amapMarkerUrl(o.n,o.c)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">高德 ↗</a>${kind==="stay"?`<a class="g ctrip" href="${ctripUrl(o.n)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">携程搜索 ↗</a>`:``}${o.r}</div></div>`};
+     <div class="r">${o.tier?'<span class="tier">'+o.tier+'</span>':''}<span class="poi-slot"><span class="tier">高德数据加载中…</span></span><a class="g amap-link" href="${amapMarkerUrl(o.n,o.c)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">高德 ↗</a>${kind==="stay"?`<a class="g ctrip" href="${ctripUrl(o.n,ck)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">携程查价 ↗</a>`:``}${o.r}</div></div>`};
   return `<div class="opts">
     <h5>住宿可选（${sc}）· 首选已标金</h5>${stays.map((o,j)=>row(o,'stay',j,j===0,sc)).join("")}
     <h5>高德实时 · ${(d.ck==='南靖'&&!d.stops.some(([id])=>id==='zz_stay'))?'厦门':d.ck}${HOTEL_ANCHOR[(d.ck==='南靖'&&!d.stops.some(([id])=>id==='zz_stay'))?'厦门':d.ck].n}周边酒店（综合排序）</h5><div id="liveHotels-${i}"><div class="m" style="font-size:12px;color:var(--ink-2)">加载中…</div></div>
     <h5>餐厅可选（${d.ck}）</h5>${foods.map((o,j)=>row(o,'food',j,false,d.ck)).join("")}
-    <div class="m" style="font-size:11px;color:var(--ink-2);margin-top:6px">价格段为9月上旬平日参考；连锁品牌具体门店名以高德/携程实际搜索结果为准。9/5演唱会当晚奥体周边会涨价，确定后立刻下单。蓝标为高德实时数据；住宿另有"携程搜索"跳转携程查看报价与评价。</div>
+    <div class="m" style="font-size:11px;color:var(--ink-2);margin-top:6px">价格段为9月上旬平日参考；连锁品牌具体门店名以高德/携程实际搜索结果为准。9/5演唱会当晚奥体周边会涨价，确定后立刻下单。蓝标为高德实时数据；住宿的"携程查价"直达携程该城市酒店列表（已按行程预填入住日期），列表内搜索框会带上酒店名。</div>
   </div>`;
 }
 let optMarkers=[];
